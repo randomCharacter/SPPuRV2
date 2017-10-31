@@ -125,15 +125,17 @@ void* edit(void *param) {
 
             c -= 0x20;
 
+            sem_post(&semInEmpty);
+            while (sem_trywait(&semOutEmpty) != 0) {
+              if (sem_trywait(&semFinishSignal) == 0) {
+                return 0;
+              }
+            }
             /* Pisanje u drugi bafer. */
             pthread_mutex_lock(&outBufferAccess);
             ringBufPutChar(&outRing, c);
             pthread_mutex_unlock(&outBufferAccess);
 
-            /* Cekanje da bi se ilustrovalo trajanje obrade. */
-            usleep(SLEEPING_TIME);
-
-            sem_post(&semInEmpty);
             sem_post(&semOutFull);
         }
     }
