@@ -280,8 +280,7 @@ void SetGpioPinDirection(char pin, char direction) {
       //set as output: set 1
       mask = 0x1 << (pin*3);
       tmp |= mask;
-    }
-    else {
+    } else {
       //set as input: set 0
       mask = ~(0x1 << (pin*3));
       tmp &= mask;
@@ -346,8 +345,7 @@ int gpio_driver_init(void) {
 
     /* Registering device. */
     result = register_chrdev(0, "gpio_driver", &gpio_driver_fops);
-    if (result < 0)
-    {
+    if (result < 0) {
         printk(KERN_INFO "gpio_driver: cannot obtain major number %d\n", gpio_driver_major);
         return result;
     }
