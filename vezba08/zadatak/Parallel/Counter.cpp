@@ -20,7 +20,7 @@ RetVal Counter() {
   unsigned char data;
 
     // Put occurrences into the table
-  	parallel_for (blocked_range<int>(0, _D_ARRAY_SIZE, 100), Tally(counterValues));
+  	parallel_for (blocked_range<int>(0, clip2CounterVector.size(), 100), Tally(counterValues));
 
     return RET_OK;
 }
